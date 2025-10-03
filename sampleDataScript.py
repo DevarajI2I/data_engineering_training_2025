@@ -89,11 +89,10 @@ customer_dim = customer_dim[['customer_key','customer_id', 'country','first_name
 
 print("\nCustomer Dimension:")
 print(customer_dim.head())
-
 print("\nProduct Dimension Table InProcess")
+
 #add fake columns and data
 categories, sub_categories, brands, colors, sizes, materials, origins, suppliers, ratings, weights, warranties, packages, certs, audiences, usages = ([] for _ in range(15))
-
 for _ in range(len(df)):
     categories.append(fake.random_element(["Electronics", "Clothing", "Furniture", "Toys", "Books"]))
     sub_categories.append(fake.word())
@@ -178,7 +177,7 @@ fact_df['return_reason'] = [
     random.choice(reasons) if flag else None for flag in fact_df['returns_flag']
 ]
 
-# Shipping methods
+# Shipping methods Default values for random generate
 shipping_methods = ["Standard", "Express", "Same-Day", "Overnight", "Pickup Point"]
 fact_df['shipping_method'] = [random.choice(shipping_methods) for _ in range(len(fact_df))]
 # Select columns for fact table
