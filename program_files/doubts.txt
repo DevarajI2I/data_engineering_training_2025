@@ -1,0 +1,24 @@
+
+draw .io 
+faker lib -p3
+
+storedproducer
+server cost high local
+talend,ssis
+
+
+high car
+
+uid -d
+er -high prioty -d
+drrae
+course complete -d
+
+
+email is needed dim table
+
+thursday demo
+etl
+pandas 
+data create (demo)
+

@@ -1,0 +1,20 @@
+fact table
+Company
+Log_id
+Project_ID
+Employee_ID
+
+Dimension Table
+project
+updata_Date
+Project_ID
+Project_Name
+Project_priority
+
+
+Dimension Table
+employee
+Employee_ID
+Employee_name
+Division
+Head_of_division
