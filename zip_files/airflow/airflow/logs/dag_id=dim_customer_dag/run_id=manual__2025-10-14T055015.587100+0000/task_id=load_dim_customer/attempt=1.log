@@ -1,0 +1,88 @@
+[2025-10-14T05:50:18.370+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-14T05:50:15.587100+00:00 [queued]>
+[2025-10-14T05:50:18.383+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-14T05:50:15.587100+00:00 [queued]>
+[2025-10-14T05:50:18.384+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-14T05:50:18.401+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_customer> on 2025-10-14 05:50:15.587100+00:00
+[2025-10-14T05:50:18.407+0000] {standard_task_runner.py:60} INFO - Started process 5133 to run task
+[2025-10-14T05:50:18.411+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_customer_dag', 'load_dim_customer', 'manual__2025-10-14T05:50:15.587100+00:00', '--job-id', '167', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmpdgrwiw4e']
+[2025-10-14T05:50:18.414+0000] {standard_task_runner.py:88} INFO - Job 167: Subtask load_dim_customer
+[2025-10-14T05:50:18.486+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-14T05:50:15.587100+00:00 [running]> on host cd1b8c665937
+[2025-10-14T05:50:18.602+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_customer_dag' AIRFLOW_CTX_TASK_ID='load_dim_customer' AIRFLOW_CTX_EXECUTION_DATE='2025-10-14T05:50:15.587100+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-14T05:50:15.587100+00:00'
+[2025-10-14T05:50:18.604+0000] {logging_mixin.py:188} INFO -  Starting dim_customer ETL pipeline
+[2025-10-14T05:50:18.682+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "etl_run_log" does not exist
+LINE 3:         FROM etl_run_log
+                     ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/customer_etl.py", line 27, in run_customer_etl
+    last_success = get_last_success_run_date(table_name)
+  File "/opt/airflow/dags/etl_logger.py", line 57, in get_last_success_run_date
+    df = pd.read_sql(query, engine, params={"tbl": table_name})
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 663, in read_sql
+    return pandas_sql.read_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1738, in read_query
+    result = self.execute(sql, params)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1563, in execute
+    return self.con.execute(sql, *args)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "etl_run_log" does not exist
+LINE 3:         FROM etl_run_log
+                     ^
+
+[SQL: 
+        SELECT last_run_timestamp
+        FROM etl_run_log
+        WHERE table_name = %(tbl)s
+          AND status = 'success'
+        ORDER BY last_run_timestamp DESC
+        LIMIT 1
+    ]
+[parameters: {'tbl': 'dim_customer'}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-10-14T05:50:18.739+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=dim_customer_dag, task_id=load_dim_customer, execution_date=20251014T055015, start_date=20251014T055018, end_date=20251014T055018
+[2025-10-14T05:50:18.763+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_customer: failed at 2025-10-14 05:50:18.739884
+[2025-10-14T05:50:18.781+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 167 for task load_dim_customer ((psycopg2.errors.UndefinedTable) relation "etl_run_log" does not exist
+LINE 3:         FROM etl_run_log
+                     ^
+
+[SQL: 
+        SELECT last_run_timestamp
+        FROM etl_run_log
+        WHERE table_name = %(tbl)s
+          AND status = 'success'
+        ORDER BY last_run_timestamp DESC
+        LIMIT 1
+    ]
+[parameters: {'tbl': 'dim_customer'}]
+(Background on this error at: https://sqlalche.me/e/14/f405); 5133)
+[2025-10-14T05:50:18.828+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-14T05:50:18.867+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,87 @@
+[2025-10-12T13:59:40.448+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-12T13:59:36.344865+00:00 [queued]>
+[2025-10-12T13:59:40.563+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-12T13:59:36.344865+00:00 [queued]>
+[2025-10-12T13:59:40.569+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-12T13:59:40.627+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-12 13:59:36.344865+00:00
+[2025-10-12T13:59:40.637+0000] {standard_task_runner.py:60} INFO - Started process 3392 to run task
+[2025-10-12T13:59:40.649+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fact_sales_dag', 'load_fact_sales', 'manual__2025-10-12T13:59:36.344865+00:00', '--job-id', '128', '--raw', '--subdir', 'DAGS_FOLDER/fact_sales_dag.py', '--cfg-path', '/tmp/tmplr0k9e6w']
+[2025-10-12T13:59:40.651+0000] {standard_task_runner.py:88} INFO - Job 128: Subtask load_fact_sales
+[2025-10-12T13:59:40.774+0000] {task_command.py:423} INFO - Running <TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-12T13:59:36.344865+00:00 [running]> on host ba936f2a330d
+[2025-10-12T13:59:41.019+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fact_sales_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-12T13:59:36.344865+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-12T13:59:36.344865+00:00'
+[2025-10-12T13:59:41.025+0000] {logging_mixin.py:188} INFO - 🚀 Starting fact_sales ETL pipeline
+[2025-10-12T13:59:41.113+0000] {logging_mixin.py:188} INFO - ⚠️ No successful run found for fact_sales — will perform full load.
+[2025-10-12T13:59:41.114+0000] {logging_mixin.py:188} INFO - ⚠️ No successful run found — performing full load.
+[2025-10-12T13:59:55.025+0000] {logging_mixin.py:188} INFO - 🆕 First load — total sales records: 10
+[2025-10-12T13:59:55.069+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+psycopg2.errors.UndefinedColumn: column "country" of relation "fact_sales" does not exist
+LINE 1: ...o, stock_code, quantity, unit_price, customer_id, country, i...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/sales_etl.py", line 84, in run_sales_etl
+    fact_sales.to_sql(table_name, engine, if_exists=if_exists_mode, index=False)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 2878, in to_sql
+    return sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 769, in to_sql
+    return pandas_sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1920, in to_sql
+    total_inserted = sql_engine.insert_records(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1470, in insert_records
+    raise err
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1461, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1023, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 929, in _execute_insert
+    result = conn.execute(self.table.insert(), data)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "country" of relation "fact_sales" does not exist
+LINE 1: ...o, stock_code, quantity, unit_price, customer_id, country, i...
+                                                             ^
+
+[SQL: INSERT INTO fact_sales (sales_key, invoice_no, stock_code, quantity, unit_price, customer_id, country, in_date, updated_at) VALUES (%(sales_key)s, %(invoice_no)s, %(stock_code)s, %(quantity)s, %(unit_price)s, %(customer_id)s, %(country)s, %(in_date)s, %(updated_at)s)]
+[parameters: ({'sales_key': '8e6b3981-2762-434c-abe7-4563f1ead22b', 'invoice_no': '536365', 'stock_code': '85123A', 'quantity': 6, 'unit_price': 2.55, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2025, 10, 10, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '08cc0988-3363-46d2-a294-185957047204', 'invoice_no': '536365', 'stock_code': '71053', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': None, 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '7ae94aed-6970-41de-8c2c-6f3b17bfcf2e', 'invoice_no': '536365', 'stock_code': '84406B', 'quantity': 8, 'unit_price': 2.75, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '27ba6461-2ec7-4696-96cd-1216b5927490', 'invoice_no': '536365', 'stock_code': '84029G', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': 'a91f0de8-121c-423c-9221-65fc487d378b', 'invoice_no': '536365', 'stock_code': '84029E', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '9d06d43e-9a29-429e-8d86-f92ded9656d4', 'invoice_no': '536365', 'stock_code': '22752', 'quantity': 2, 'unit_price': 7.65, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': 'bc1172a2-0253-4862-a45e-942d6f82a5ca', 'invoice_no': '536365', 'stock_code': '21730', 'quantity': 6, 'unit_price': 4.25, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '29822118-b368-4ac1-882c-f4cbec4e8ba1', 'invoice_no': '536366', 'stock_code': '22633', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': 'd3dccdd1-ade8-49ec-8474-2138de9866ff', 'invoice_no': '536366', 'stock_code': '22632', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '02f5e26c-cbb9-4e70-8ede-8234a34f5a59', 'invoice_no': '536367', 'stock_code': '84879', 'quantity': 32, 'unit_price': 1.69, 'customer_id': 13047.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 34), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)})]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-10-12T13:59:55.130+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=fact_sales_dag, task_id=load_fact_sales, execution_date=20251012T135936, start_date=20251012T135940, end_date=20251012T135955
+[2025-10-12T13:59:55.135+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for fact_sales: failed at 2025-10-12 13:59:55.131418
+[2025-10-12T13:59:55.154+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 128 for task load_fact_sales ((psycopg2.errors.UndefinedColumn) column "country" of relation "fact_sales" does not exist
+LINE 1: ...o, stock_code, quantity, unit_price, customer_id, country, i...
+                                                             ^
+
+[SQL: INSERT INTO fact_sales (sales_key, invoice_no, stock_code, quantity, unit_price, customer_id, country, in_date, updated_at) VALUES (%(sales_key)s, %(invoice_no)s, %(stock_code)s, %(quantity)s, %(unit_price)s, %(customer_id)s, %(country)s, %(in_date)s, %(updated_at)s)]
+[parameters: ({'sales_key': '8e6b3981-2762-434c-abe7-4563f1ead22b', 'invoice_no': '536365', 'stock_code': '85123A', 'quantity': 6, 'unit_price': 2.55, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2025, 10, 10, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '08cc0988-3363-46d2-a294-185957047204', 'invoice_no': '536365', 'stock_code': '71053', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': None, 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '7ae94aed-6970-41de-8c2c-6f3b17bfcf2e', 'invoice_no': '536365', 'stock_code': '84406B', 'quantity': 8, 'unit_price': 2.75, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '27ba6461-2ec7-4696-96cd-1216b5927490', 'invoice_no': '536365', 'stock_code': '84029G', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': 'a91f0de8-121c-423c-9221-65fc487d378b', 'invoice_no': '536365', 'stock_code': '84029E', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '9d06d43e-9a29-429e-8d86-f92ded9656d4', 'invoice_no': '536365', 'stock_code': '22752', 'quantity': 2, 'unit_price': 7.65, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': 'bc1172a2-0253-4862-a45e-942d6f82a5ca', 'invoice_no': '536365', 'stock_code': '21730', 'quantity': 6, 'unit_price': 4.25, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '29822118-b368-4ac1-882c-f4cbec4e8ba1', 'invoice_no': '536366', 'stock_code': '22633', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': 'd3dccdd1-ade8-49ec-8474-2138de9866ff', 'invoice_no': '536366', 'stock_code': '22632', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)}, {'sales_key': '02f5e26c-cbb9-4e70-8ede-8234a34f5a59', 'invoice_no': '536367', 'stock_code': '84879', 'quantity': 32, 'unit_price': 1.69, 'customer_id': 13047.0, 'country': 'United Kingdom', 'in_date': datetime.datetime(2010, 12, 1, 8, 34), 'updated_at': datetime.datetime(2025, 10, 12, 13, 59, 55, 27395)})]
+(Background on this error at: https://sqlalche.me/e/14/f405); 3392)
+[2025-10-12T13:59:55.253+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-12T13:59:55.384+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,34 @@
+[2025-10-10T11:55:08.560+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-10T11:55:05.563373+00:00 [queued]>
+[2025-10-10T11:55:08.571+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-10T11:55:05.563373+00:00 [queued]>
+[2025-10-10T11:55:08.572+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-10T11:55:08.589+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_customer> on 2025-10-10 11:55:05.563373+00:00
+[2025-10-10T11:55:08.595+0000] {standard_task_runner.py:60} INFO - Started process 301 to run task
+[2025-10-10T11:55:08.599+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_customer_dag', 'load_dim_customer', 'manual__2025-10-10T11:55:05.563373+00:00', '--job-id', '99', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmp1tvumyme']
+[2025-10-10T11:55:08.601+0000] {standard_task_runner.py:88} INFO - Job 99: Subtask load_dim_customer
+[2025-10-10T11:55:08.672+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-10T11:55:05.563373+00:00 [running]> on host 5d4700d1e94a
+[2025-10-10T11:55:08.790+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_customer_dag' AIRFLOW_CTX_TASK_ID='load_dim_customer' AIRFLOW_CTX_EXECUTION_DATE='2025-10-10T11:55:05.563373+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-10T11:55:05.563373+00:00'
+[2025-10-10T11:55:17.428+0000] {logging_mixin.py:188} INFO - No successful run found for dim_customer
+[2025-10-10T12:04:59.172+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/customer_etl.py", line 63, in run_customer_etl
+    df["last_run_date"] = last_run_dates
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 3950, in __setitem__
+    self._set_item(key, value)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 4143, in _set_item
+    value = self._sanitize_column(value)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 4870, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/common.py", line 576, in require_length_match
+    raise ValueError(
+ValueError: Length of values (0) does not match length of index (541909)
+[2025-10-10T12:04:59.192+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=dim_customer_dag, task_id=load_dim_customer, execution_date=20251010T115505, start_date=20251010T115508, end_date=20251010T120459
+[2025-10-10T12:04:59.200+0000] {logging_mixin.py:188} INFO - Logged ETL run for dim_customer: failed at 2025-10-10 12:04:59.192972
+[2025-10-10T12:04:59.317+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 99 for task load_dim_customer (Length of values (0) does not match length of index (541909); 301)
+[2025-10-10T12:04:59.388+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-10T12:04:59.411+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

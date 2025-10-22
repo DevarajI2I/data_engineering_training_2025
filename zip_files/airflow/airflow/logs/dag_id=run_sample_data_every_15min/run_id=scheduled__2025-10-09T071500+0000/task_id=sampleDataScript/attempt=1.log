@@ -1,0 +1,16 @@
+[2025-10-09T07:30:02.872+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: run_sample_data_every_15min.sampleDataScript scheduled__2025-10-09T07:15:00+00:00 [queued]>
+[2025-10-09T07:30:02.883+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: run_sample_data_every_15min.sampleDataScript scheduled__2025-10-09T07:15:00+00:00 [queued]>
+[2025-10-09T07:30:02.884+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 2
+[2025-10-09T07:30:02.902+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): sampleDataScript> on 2025-10-09 07:15:00+00:00
+[2025-10-09T07:30:02.909+0000] {standard_task_runner.py:60} INFO - Started process 375 to run task
+[2025-10-09T07:30:02.913+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'run_sample_data_every_15min', 'sampleDataScript', 'scheduled__2025-10-09T07:15:00+00:00', '--job-id', '62', '--raw', '--subdir', 'DAGS_FOLDER/dag_file.py', '--cfg-path', '/tmp/tmpqn3oipv2']
+[2025-10-09T07:30:02.915+0000] {standard_task_runner.py:88} INFO - Job 62: Subtask sampleDataScript
+[2025-10-09T07:30:02.997+0000] {task_command.py:423} INFO - Running <TaskInstance: run_sample_data_every_15min.sampleDataScript scheduled__2025-10-09T07:15:00+00:00 [running]> on host c9c6d5ce5327
+[2025-10-09T07:30:03.125+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='run_sample_data_every_15min' AIRFLOW_CTX_TASK_ID='sampleDataScript' AIRFLOW_CTX_EXECUTION_DATE='2025-10-09T07:15:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-09T07:15:00+00:00'
+[2025-10-09T07:30:03.147+0000] {logging_mixin.py:188} INFO - CSV loaded successfully!
+[2025-10-09T07:30:03.237+0000] {logging_mixin.py:188} INFO - 
+Customer Dimension:
+[2025-10-09T07:30:03.261+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-09T07:30:03.280+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=run_sample_data_every_15min, task_id=sampleDataScript, execution_date=20251009T071500, start_date=20251009T073002, end_date=20251009T073003
+[2025-10-09T07:30:03.326+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-09T07:30:03.354+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

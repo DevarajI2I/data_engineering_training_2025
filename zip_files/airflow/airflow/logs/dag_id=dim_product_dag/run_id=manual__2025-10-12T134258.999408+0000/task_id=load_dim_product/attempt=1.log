@@ -1,0 +1,20 @@
+[2025-10-12T13:43:02.886+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_product_dag.load_dim_product manual__2025-10-12T13:42:58.999408+00:00 [queued]>
+[2025-10-12T13:43:02.904+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_product_dag.load_dim_product manual__2025-10-12T13:42:58.999408+00:00 [queued]>
+[2025-10-12T13:43:02.905+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-12T13:43:02.950+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_product> on 2025-10-12 13:42:58.999408+00:00
+[2025-10-12T13:43:02.960+0000] {standard_task_runner.py:60} INFO - Started process 3149 to run task
+[2025-10-12T13:43:02.966+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_product_dag', 'load_dim_product', 'manual__2025-10-12T13:42:58.999408+00:00', '--job-id', '125', '--raw', '--subdir', 'DAGS_FOLDER/dim_product_dag.py', '--cfg-path', '/tmp/tmpaf66bzh7']
+[2025-10-12T13:43:02.968+0000] {standard_task_runner.py:88} INFO - Job 125: Subtask load_dim_product
+[2025-10-12T13:43:03.077+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_product_dag.load_dim_product manual__2025-10-12T13:42:58.999408+00:00 [running]> on host ba936f2a330d
+[2025-10-12T13:43:03.264+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_product_dag' AIRFLOW_CTX_TASK_ID='load_dim_product' AIRFLOW_CTX_EXECUTION_DATE='2025-10-12T13:42:58.999408+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-12T13:42:58.999408+00:00'
+[2025-10-12T13:43:03.266+0000] {logging_mixin.py:188} INFO - 🚀 Starting dim_product ETL pipeline
+[2025-10-12T13:43:03.382+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for dim_product: 2025-10-12 13:40:30.024444
+[2025-10-12T13:43:03.383+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-12 13:40:30.024444
+[2025-10-12T13:43:16.799+0000] {logging_mixin.py:188} INFO - 🔍 Found 0 new/updated product records since last run.
+[2025-10-12T13:43:16.800+0000] {logging_mixin.py:188} INFO - ℹ️ No new product records to insert.
+[2025-10-12T13:43:16.806+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_product: success at 2025-10-12 13:43:16.801460
+[2025-10-12T13:43:16.808+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-12T13:43:16.831+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=dim_product_dag, task_id=load_dim_product, execution_date=20251012T134258, start_date=20251012T134302, end_date=20251012T134316
+[2025-10-12T13:43:16.836+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_product: success at 2025-10-12 13:43:16.832813
+[2025-10-12T13:43:16.870+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-12T13:43:16.896+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

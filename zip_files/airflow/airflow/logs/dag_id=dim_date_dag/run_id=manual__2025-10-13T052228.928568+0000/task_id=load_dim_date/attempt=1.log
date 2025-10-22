@@ -1,0 +1,73 @@
+[2025-10-13T05:22:31.360+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_date_dag.load_dim_date manual__2025-10-13T05:22:28.928568+00:00 [queued]>
+[2025-10-13T05:22:31.371+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_date_dag.load_dim_date manual__2025-10-13T05:22:28.928568+00:00 [queued]>
+[2025-10-13T05:22:31.372+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-13T05:22:31.391+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_date> on 2025-10-13 05:22:28.928568+00:00
+[2025-10-13T05:22:31.396+0000] {standard_task_runner.py:60} INFO - Started process 459 to run task
+[2025-10-13T05:22:31.401+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_date_dag', 'load_dim_date', 'manual__2025-10-13T05:22:28.928568+00:00', '--job-id', '142', '--raw', '--subdir', 'DAGS_FOLDER/dim_date_dag.py', '--cfg-path', '/tmp/tmpai67gi9u']
+[2025-10-13T05:22:31.403+0000] {standard_task_runner.py:88} INFO - Job 142: Subtask load_dim_date
+[2025-10-13T05:22:31.477+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_date_dag.load_dim_date manual__2025-10-13T05:22:28.928568+00:00 [running]> on host cd1b8c665937
+[2025-10-13T05:22:31.605+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_date_dag' AIRFLOW_CTX_TASK_ID='load_dim_date' AIRFLOW_CTX_EXECUTION_DATE='2025-10-13T05:22:28.928568+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-13T05:22:28.928568+00:00'
+[2025-10-13T05:22:31.607+0000] {logging_mixin.py:188} INFO - 🚀 Starting dim_date ETL pipeline
+[2025-10-13T05:22:31.641+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for dim_date: 2025-10-12 13:55:40.397498
+[2025-10-13T05:22:31.641+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-12 13:55:40.397498
+[2025-10-13T05:22:39.459+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:35: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-13T05:22:39.520+0000] {logging_mixin.py:188} INFO - 🔍 Found 1 new date records since last run.
+[2025-10-13T05:22:39.524+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:56: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data["Year"] = new_data["InDate"].dt.year
+
+[2025-10-13T05:22:39.526+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:57: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data["Month"] = new_data["InDate"].dt.month
+
+[2025-10-13T05:22:39.527+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:58: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data["Day"] = new_data["InDate"].dt.day
+
+[2025-10-13T05:22:39.529+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:59: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data["Quarter"] = new_data["InDate"].dt.quarter
+
+[2025-10-13T05:22:39.531+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:60: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data["updated_at"] = datetime.now()
+
+[2025-10-13T05:22:39.532+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/date_etl.py", line 61, in run_date_etl
+    new_data['date_key'] = new_data['invoice_date'].dt.strftime('%Y%m%d').astype(int)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 5989, in __getattr__
+    return object.__getattribute__(self, name)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/accessor.py", line 224, in __get__
+    accessor_obj = self._accessor(obj)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/indexes/accessors.py", line 580, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+[2025-10-13T05:22:39.553+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=dim_date_dag, task_id=load_dim_date, execution_date=20251013T052228, start_date=20251013T052231, end_date=20251013T052239
+[2025-10-13T05:22:39.556+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_date: failed at 2025-10-13 05:22:39.553782
+[2025-10-13T05:22:39.575+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 142 for task load_dim_date (Can only use .dt accessor with datetimelike values; 459)
+[2025-10-13T05:22:39.629+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-13T05:22:39.654+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

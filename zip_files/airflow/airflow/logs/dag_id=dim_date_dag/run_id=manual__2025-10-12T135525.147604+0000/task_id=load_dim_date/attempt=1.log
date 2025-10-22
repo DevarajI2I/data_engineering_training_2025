@@ -1,0 +1,20 @@
+[2025-10-12T13:55:29.110+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_date_dag.load_dim_date manual__2025-10-12T13:55:25.147604+00:00 [queued]>
+[2025-10-12T13:55:29.137+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_date_dag.load_dim_date manual__2025-10-12T13:55:25.147604+00:00 [queued]>
+[2025-10-12T13:55:29.139+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-12T13:55:29.179+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_date> on 2025-10-12 13:55:25.147604+00:00
+[2025-10-12T13:55:29.188+0000] {standard_task_runner.py:60} INFO - Started process 3332 to run task
+[2025-10-12T13:55:29.194+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_date_dag', 'load_dim_date', 'manual__2025-10-12T13:55:25.147604+00:00', '--job-id', '127', '--raw', '--subdir', 'DAGS_FOLDER/dim_date_dag.py', '--cfg-path', '/tmp/tmpwm49ubvf']
+[2025-10-12T13:55:29.196+0000] {standard_task_runner.py:88} INFO - Job 127: Subtask load_dim_date
+[2025-10-12T13:55:29.306+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_date_dag.load_dim_date manual__2025-10-12T13:55:25.147604+00:00 [running]> on host ba936f2a330d
+[2025-10-12T13:55:29.543+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_date_dag' AIRFLOW_CTX_TASK_ID='load_dim_date' AIRFLOW_CTX_EXECUTION_DATE='2025-10-12T13:55:25.147604+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-12T13:55:25.147604+00:00'
+[2025-10-12T13:55:29.546+0000] {logging_mixin.py:188} INFO - 🚀 Starting dim_date ETL pipeline
+[2025-10-12T13:55:29.581+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for dim_date: 2025-10-12 13:55:10.021074
+[2025-10-12T13:55:29.582+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-12 13:55:10.021074
+[2025-10-12T13:55:40.272+0000] {logging_mixin.py:188} INFO - 🔍 Found 0 new date records since last run.
+[2025-10-12T13:55:40.273+0000] {logging_mixin.py:188} INFO - ℹ️ No new date records to insert.
+[2025-10-12T13:55:40.299+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_date: success at 2025-10-12 13:55:40.273723
+[2025-10-12T13:55:40.376+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-12T13:55:40.396+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=dim_date_dag, task_id=load_dim_date, execution_date=20251012T135525, start_date=20251012T135529, end_date=20251012T135540
+[2025-10-12T13:55:40.402+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_date: success at 2025-10-12 13:55:40.397498
+[2025-10-12T13:55:40.465+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-12T13:55:40.504+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

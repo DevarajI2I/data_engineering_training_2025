@@ -1,0 +1,30 @@
+[2025-10-10T15:47:24.542+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-10T15:47:19.115820+00:00 [queued]>
+[2025-10-10T15:47:24.553+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-10T15:47:19.115820+00:00 [queued]>
+[2025-10-10T15:47:24.555+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-10T15:47:24.580+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_customer> on 2025-10-10 15:47:19.115820+00:00
+[2025-10-10T15:47:24.586+0000] {standard_task_runner.py:60} INFO - Started process 77 to run task
+[2025-10-10T15:47:24.591+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_customer_dag', 'load_dim_customer', 'manual__2025-10-10T15:47:19.115820+00:00', '--job-id', '112', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmpewyosesy']
+[2025-10-10T15:47:24.594+0000] {standard_task_runner.py:88} INFO - Job 112: Subtask load_dim_customer
+[2025-10-10T15:47:24.684+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-10T15:47:19.115820+00:00 [running]> on host ba936f2a330d
+[2025-10-10T15:47:24.836+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_customer_dag' AIRFLOW_CTX_TASK_ID='load_dim_customer' AIRFLOW_CTX_EXECUTION_DATE='2025-10-10T15:47:19.115820+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-10T15:47:19.115820+00:00'
+[2025-10-10T15:47:24.838+0000] {logging_mixin.py:188} INFO - 🚀 Starting dim_customer ETL pipeline
+[2025-10-10T15:47:24.922+0000] {logging_mixin.py:188} INFO - ⚠️ No successful run found for dim_customer — will perform full load.
+[2025-10-10T15:47:24.923+0000] {logging_mixin.py:188} INFO - ⚠️ No successful run found — performing full load.
+[2025-10-10T15:47:35.350+0000] {logging_mixin.py:188} INFO - 🆕 First load — total records to insert: 10
+[2025-10-10T15:47:35.396+0000] {logging_mixin.py:188} INFO - ✅ Successfully loaded 2 records into dim_customer
+[2025-10-10T15:47:35.405+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/customer_etl.py", line 137, in run_customer_etl
+    conn.commit()
+AttributeError: 'Connection' object has no attribute 'commit'
+[2025-10-10T15:47:35.434+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=dim_customer_dag, task_id=load_dim_customer, execution_date=20251010T154719, start_date=20251010T154724, end_date=20251010T154735
+[2025-10-10T15:47:35.438+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_customer: failed at 2025-10-10 15:47:35.435112
+[2025-10-10T15:47:35.462+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 112 for task load_dim_customer ('Connection' object has no attribute 'commit'; 77)
+[2025-10-10T15:47:35.487+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-10T15:47:35.515+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

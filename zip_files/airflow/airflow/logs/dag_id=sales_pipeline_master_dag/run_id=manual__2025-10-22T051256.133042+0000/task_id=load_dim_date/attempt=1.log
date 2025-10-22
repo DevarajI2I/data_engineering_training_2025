@@ -1,0 +1,39 @@
+[2025-10-22T05:12:59.333+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T05:12:56.133042+00:00 [queued]>
+[2025-10-22T05:12:59.344+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T05:12:56.133042+00:00 [queued]>
+[2025-10-22T05:12:59.345+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-22T05:12:59.367+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_date> on 2025-10-22 05:12:56.133042+00:00
+[2025-10-22T05:12:59.374+0000] {standard_task_runner.py:60} INFO - Started process 2370 to run task
+[2025-10-22T05:12:59.379+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_dim_date', 'manual__2025-10-22T05:12:56.133042+00:00', '--job-id', '277', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmptd4mwxds']
+[2025-10-22T05:12:59.382+0000] {standard_task_runner.py:88} INFO - Job 277: Subtask load_dim_date
+[2025-10-22T05:12:59.474+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T05:12:56.133042+00:00 [running]> on host 73b97317d540
+[2025-10-22T05:12:59.623+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_dim_date' AIRFLOW_CTX_EXECUTION_DATE='2025-10-22T05:12:56.133042+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-22T05:12:56.133042+00:00'
+[2025-10-22T05:12:59.625+0000] {logging_mixin.py:188} INFO -  Starting dim_date ETL pipeline
+[2025-10-22T05:12:59.656+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for dim_date: 2025-10-22 04:17:52.589969
+[2025-10-22T05:12:59.657+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-22 04:17:52.589969
+[2025-10-22T05:13:09.712+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:36: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-22T05:13:09.769+0000] {logging_mixin.py:188} INFO -  Found 1 new date records since last run.
+[2025-10-22T05:13:09.778+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/date_etl.py", line 75, in run_date_etl
+    dim_date = new_data[
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['Year', 'Month', 'Day', 'Quarter'] not in index"
+[2025-10-22T05:13:09.807+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=sales_pipeline_master_dag, task_id=load_dim_date, execution_date=20251022T051256, start_date=20251022T051259, end_date=20251022T051309
+[2025-10-22T05:13:09.816+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_customer: failed at 2025-10-22 05:13:09.810793
+[2025-10-22T05:13:09.817+0000] {logging_mixin.py:188} INFO - Task load_dim_date in DAG sales_pipeline_master_dag failed!
+[2025-10-22T05:13:09.838+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 277 for task load_dim_date ("['Year', 'Month', 'Day', 'Quarter'] not in index"; 2370)
+[2025-10-22T05:13:09.881+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-22T05:13:09.946+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

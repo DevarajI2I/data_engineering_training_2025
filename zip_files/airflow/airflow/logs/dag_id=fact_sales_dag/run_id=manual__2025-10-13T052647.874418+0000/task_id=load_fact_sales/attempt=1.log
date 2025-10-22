@@ -1,0 +1,44 @@
+[2025-10-13T05:26:50.370+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-13T05:26:47.874418+00:00 [queued]>
+[2025-10-13T05:26:50.382+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-13T05:26:47.874418+00:00 [queued]>
+[2025-10-13T05:26:50.383+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-13T05:26:50.408+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-13 05:26:47.874418+00:00
+[2025-10-13T05:26:50.415+0000] {standard_task_runner.py:60} INFO - Started process 523 to run task
+[2025-10-13T05:26:50.419+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fact_sales_dag', 'load_fact_sales', 'manual__2025-10-13T05:26:47.874418+00:00', '--job-id', '145', '--raw', '--subdir', 'DAGS_FOLDER/fact_sales_dag.py', '--cfg-path', '/tmp/tmpmas03odh']
+[2025-10-13T05:26:50.421+0000] {standard_task_runner.py:88} INFO - Job 145: Subtask load_fact_sales
+[2025-10-13T05:26:50.500+0000] {task_command.py:423} INFO - Running <TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-13T05:26:47.874418+00:00 [running]> on host cd1b8c665937
+[2025-10-13T05:26:50.632+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fact_sales_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-13T05:26:47.874418+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-13T05:26:47.874418+00:00'
+[2025-10-13T05:26:50.634+0000] {logging_mixin.py:188} INFO - 🚀 Starting fact_sales ETL pipeline
+[2025-10-13T05:26:50.663+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for fact_sales: 2025-10-13 04:59:51.515612
+[2025-10-13T05:26:50.664+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-13 04:59:51.515612
+[2025-10-13T05:26:59.151+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:37: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-13T05:26:59.154+0000] {logging_mixin.py:188} INFO - 🔍 Found 1 new sales records since last run.
+[2025-10-13T05:27:06.732+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:58: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data.rename(columns={
+
+[2025-10-13T05:27:06.988+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/sales_etl.py", line 74, in run_sales_etl
+    .merge(date_dim[['invoice_date','date_key']], on='invoice_date', how='left')
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['invoice_date'] not in index"
+[2025-10-13T05:27:07.009+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=fact_sales_dag, task_id=load_fact_sales, execution_date=20251013T052647, start_date=20251013T052650, end_date=20251013T052707
+[2025-10-13T05:27:07.013+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for fact_sales: failed at 2025-10-13 05:27:07.010058
+[2025-10-13T05:27:07.030+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 145 for task load_fact_sales ("['invoice_date'] not in index"; 523)
+[2025-10-13T05:27:07.118+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-13T05:27:07.140+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

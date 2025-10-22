@@ -1,0 +1,30 @@
+[2025-10-13T06:40:02.642+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales scheduled__2025-10-13T06:35:00+00:00 [queued]>
+[2025-10-13T06:40:02.651+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales scheduled__2025-10-13T06:35:00+00:00 [queued]>
+[2025-10-13T06:40:02.651+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-13T06:40:02.669+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-13 06:35:00+00:00
+[2025-10-13T06:40:02.674+0000] {standard_task_runner.py:60} INFO - Started process 1629 to run task
+[2025-10-13T06:40:02.678+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fact_sales_dag', 'load_fact_sales', 'scheduled__2025-10-13T06:35:00+00:00', '--job-id', '159', '--raw', '--subdir', 'DAGS_FOLDER/fact_sales_dag.py', '--cfg-path', '/tmp/tmpg9a368yv']
+[2025-10-13T06:40:02.680+0000] {standard_task_runner.py:88} INFO - Job 159: Subtask load_fact_sales
+[2025-10-13T06:40:02.750+0000] {task_command.py:423} INFO - Running <TaskInstance: fact_sales_dag.load_fact_sales scheduled__2025-10-13T06:35:00+00:00 [running]> on host cd1b8c665937
+[2025-10-13T06:40:02.860+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fact_sales_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-13T06:35:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-13T06:35:00+00:00'
+[2025-10-13T06:40:02.862+0000] {logging_mixin.py:188} INFO - 🚀 Starting fact_sales ETL pipeline
+[2025-10-13T06:40:02.888+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for fact_sales: 2025-10-13 06:35:17.067771
+[2025-10-13T06:40:02.889+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-13 06:35:17.067771
+[2025-10-13T06:40:09.714+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:37: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-13T06:40:09.717+0000] {logging_mixin.py:188} INFO - 🔍 Found 1 new sales records since last run.
+[2025-10-13T06:40:16.356+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:59: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data.rename(columns={
+
+[2025-10-13T06:40:16.568+0000] {logging_mixin.py:188} INFO - ✅ Successfully loaded 58 records into fact_sales
+[2025-10-13T06:40:16.574+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for fact_sales: success at 2025-10-13 06:40:16.571037
+[2025-10-13T06:40:16.575+0000] {logging_mixin.py:188} INFO - 🟩 fact_sales ETL completed successfully.
+[2025-10-13T06:40:16.997+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-13T06:40:17.012+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=fact_sales_dag, task_id=load_fact_sales, execution_date=20251013T063500, start_date=20251013T064002, end_date=20251013T064017
+[2025-10-13T06:40:17.020+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for fact_sales: success at 2025-10-13 06:40:17.013329
+[2025-10-13T06:40:17.082+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-13T06:40:17.115+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

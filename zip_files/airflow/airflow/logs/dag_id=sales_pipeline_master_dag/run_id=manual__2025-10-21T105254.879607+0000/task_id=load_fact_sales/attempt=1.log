@@ -1,0 +1,23 @@
+[2025-10-21T10:53:34.225+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_fact_sales manual__2025-10-21T10:52:54.879607+00:00 [queued]>
+[2025-10-21T10:53:34.247+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_fact_sales manual__2025-10-21T10:52:54.879607+00:00 [queued]>
+[2025-10-21T10:53:34.248+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-21T10:53:34.281+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-21 10:52:54.879607+00:00
+[2025-10-21T10:53:34.294+0000] {standard_task_runner.py:60} INFO - Started process 120 to run task
+[2025-10-21T10:53:34.301+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_fact_sales', 'manual__2025-10-21T10:52:54.879607+00:00', '--job-id', '209', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmpcsmr_p89']
+[2025-10-21T10:53:34.307+0000] {standard_task_runner.py:88} INFO - Job 209: Subtask load_fact_sales
+[2025-10-21T10:53:34.445+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_fact_sales manual__2025-10-21T10:52:54.879607+00:00 [running]> on host 73b97317d540
+[2025-10-21T10:53:34.710+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-21T10:52:54.879607+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-21T10:52:54.879607+00:00'
+[2025-10-21T10:53:34.714+0000] {logging_mixin.py:188} INFO -  Starting fact_sales ETL pipeline
+[2025-10-21T10:53:34.777+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for fact_sales: 2025-10-21 10:14:35.919831
+[2025-10-21T10:53:34.779+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-21 10:14:35.919831
+[2025-10-21T10:53:49.359+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:37: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-21T10:53:49.364+0000] {logging_mixin.py:188} INFO -  Found 0 new sales records since last run.
+[2025-10-21T10:53:49.366+0000] {logging_mixin.py:188} INFO -  No new sales records to insert.
+[2025-10-21T10:53:49.394+0000] {logging_mixin.py:188} INFO -  Logged ETL run for fact_sales: success at 2025-10-21 10:53:49.368044
+[2025-10-21T10:53:49.505+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-21T10:53:49.537+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=sales_pipeline_master_dag, task_id=load_fact_sales, execution_date=20251021T105254, start_date=20251021T105334, end_date=20251021T105349
+[2025-10-21T10:53:49.564+0000] {logging_mixin.py:188} INFO -  Logged ETL run for fact_sales: success at 2025-10-21 10:53:49.538918
+[2025-10-21T10:53:49.625+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-21T10:53:49.670+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

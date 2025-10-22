@@ -1,0 +1,87 @@
+[2025-10-12T14:04:57.148+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-12T14:04:53.377642+00:00 [queued]>
+[2025-10-12T14:04:57.164+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-12T14:04:53.377642+00:00 [queued]>
+[2025-10-12T14:04:57.165+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-12T14:04:57.196+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-12 14:04:53.377642+00:00
+[2025-10-12T14:04:57.205+0000] {standard_task_runner.py:60} INFO - Started process 3474 to run task
+[2025-10-12T14:04:57.211+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fact_sales_dag', 'load_fact_sales', 'manual__2025-10-12T14:04:53.377642+00:00', '--job-id', '129', '--raw', '--subdir', 'DAGS_FOLDER/fact_sales_dag.py', '--cfg-path', '/tmp/tmpfgwnvgfk']
+[2025-10-12T14:04:57.213+0000] {standard_task_runner.py:88} INFO - Job 129: Subtask load_fact_sales
+[2025-10-12T14:04:57.326+0000] {task_command.py:423} INFO - Running <TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-12T14:04:53.377642+00:00 [running]> on host ba936f2a330d
+[2025-10-12T14:04:57.538+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fact_sales_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-12T14:04:53.377642+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-12T14:04:53.377642+00:00'
+[2025-10-12T14:04:57.542+0000] {logging_mixin.py:188} INFO - 🚀 Starting fact_sales ETL pipeline
+[2025-10-12T14:04:57.597+0000] {logging_mixin.py:188} INFO - ⚠️ No successful run found for fact_sales — will perform full load.
+[2025-10-12T14:04:57.598+0000] {logging_mixin.py:188} INFO - ⚠️ No successful run found — performing full load.
+[2025-10-12T14:05:07.457+0000] {logging_mixin.py:188} INFO - 🆕 First load — total sales records: 10
+[2025-10-12T14:05:07.506+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+psycopg2.errors.UndefinedColumn: column "in_date" of relation "fact_sales" does not exist
+LINE 1: ...o, stock_code, quantity, unit_price, customer_id, in_date, u...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/sales_etl.py", line 83, in run_sales_etl
+    fact_sales.to_sql(table_name, engine, if_exists=if_exists_mode, index=False)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 2878, in to_sql
+    return sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 769, in to_sql
+    return pandas_sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1920, in to_sql
+    total_inserted = sql_engine.insert_records(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1470, in insert_records
+    raise err
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1461, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1023, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 929, in _execute_insert
+    result = conn.execute(self.table.insert(), data)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "in_date" of relation "fact_sales" does not exist
+LINE 1: ...o, stock_code, quantity, unit_price, customer_id, in_date, u...
+                                                             ^
+
+[SQL: INSERT INTO fact_sales (sales_key, invoice_no, stock_code, quantity, unit_price, customer_id, in_date, updated_at) VALUES (%(sales_key)s, %(invoice_no)s, %(stock_code)s, %(quantity)s, %(unit_price)s, %(customer_id)s, %(in_date)s, %(updated_at)s)]
+[parameters: ({'sales_key': '159be65c-ab9c-40ff-bacd-6d3d2eb431ca', 'invoice_no': '536365', 'stock_code': '85123A', 'quantity': 6, 'unit_price': 2.55, 'customer_id': 17850.0, 'in_date': datetime.datetime(2025, 10, 10, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '2ad5eafc-2fcf-4698-b2ab-dd1580adaa3a', 'invoice_no': '536365', 'stock_code': '71053', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'in_date': None, 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': 'dc654e72-27d2-4bf3-9c5c-d306810c872c', 'invoice_no': '536365', 'stock_code': '84406B', 'quantity': 8, 'unit_price': 2.75, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '83fc334d-5894-4cb8-b27f-b8814fae340f', 'invoice_no': '536365', 'stock_code': '84029G', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': 'de545d8a-6b50-4db7-beb8-fa3c6d631227', 'invoice_no': '536365', 'stock_code': '84029E', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '49100b86-32dc-4be7-982f-3f7043db4dd0', 'invoice_no': '536365', 'stock_code': '22752', 'quantity': 2, 'unit_price': 7.65, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '9c77df05-464e-4ba0-8e53-ce4d9dee24f2', 'invoice_no': '536365', 'stock_code': '21730', 'quantity': 6, 'unit_price': 4.25, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '2d9c91cf-08c9-48ee-86a4-85fc05e2da3f', 'invoice_no': '536366', 'stock_code': '22633', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '10ade6d3-d05b-45d4-b21d-6a13bffb3fbf', 'invoice_no': '536366', 'stock_code': '22632', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '09ade2ea-8faa-4a79-acdf-8c46415c93da', 'invoice_no': '536367', 'stock_code': '84879', 'quantity': 32, 'unit_price': 1.69, 'customer_id': 13047.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 34), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)})]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-10-12T14:05:07.539+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=fact_sales_dag, task_id=load_fact_sales, execution_date=20251012T140453, start_date=20251012T140457, end_date=20251012T140507
+[2025-10-12T14:05:07.545+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for fact_sales: failed at 2025-10-12 14:05:07.540466
+[2025-10-12T14:05:07.563+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 129 for task load_fact_sales ((psycopg2.errors.UndefinedColumn) column "in_date" of relation "fact_sales" does not exist
+LINE 1: ...o, stock_code, quantity, unit_price, customer_id, in_date, u...
+                                                             ^
+
+[SQL: INSERT INTO fact_sales (sales_key, invoice_no, stock_code, quantity, unit_price, customer_id, in_date, updated_at) VALUES (%(sales_key)s, %(invoice_no)s, %(stock_code)s, %(quantity)s, %(unit_price)s, %(customer_id)s, %(in_date)s, %(updated_at)s)]
+[parameters: ({'sales_key': '159be65c-ab9c-40ff-bacd-6d3d2eb431ca', 'invoice_no': '536365', 'stock_code': '85123A', 'quantity': 6, 'unit_price': 2.55, 'customer_id': 17850.0, 'in_date': datetime.datetime(2025, 10, 10, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '2ad5eafc-2fcf-4698-b2ab-dd1580adaa3a', 'invoice_no': '536365', 'stock_code': '71053', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'in_date': None, 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': 'dc654e72-27d2-4bf3-9c5c-d306810c872c', 'invoice_no': '536365', 'stock_code': '84406B', 'quantity': 8, 'unit_price': 2.75, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '83fc334d-5894-4cb8-b27f-b8814fae340f', 'invoice_no': '536365', 'stock_code': '84029G', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': 'de545d8a-6b50-4db7-beb8-fa3c6d631227', 'invoice_no': '536365', 'stock_code': '84029E', 'quantity': 6, 'unit_price': 3.39, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '49100b86-32dc-4be7-982f-3f7043db4dd0', 'invoice_no': '536365', 'stock_code': '22752', 'quantity': 2, 'unit_price': 7.65, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '9c77df05-464e-4ba0-8e53-ce4d9dee24f2', 'invoice_no': '536365', 'stock_code': '21730', 'quantity': 6, 'unit_price': 4.25, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 26), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '2d9c91cf-08c9-48ee-86a4-85fc05e2da3f', 'invoice_no': '536366', 'stock_code': '22633', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '10ade6d3-d05b-45d4-b21d-6a13bffb3fbf', 'invoice_no': '536366', 'stock_code': '22632', 'quantity': 6, 'unit_price': 1.85, 'customer_id': 17850.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 28), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)}, {'sales_key': '09ade2ea-8faa-4a79-acdf-8c46415c93da', 'invoice_no': '536367', 'stock_code': '84879', 'quantity': 32, 'unit_price': 1.69, 'customer_id': 13047.0, 'in_date': datetime.datetime(2010, 12, 1, 8, 34), 'updated_at': datetime.datetime(2025, 10, 12, 14, 5, 7, 459073)})]
+(Background on this error at: https://sqlalche.me/e/14/f405); 3474)
+[2025-10-12T14:05:07.627+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-12T14:05:07.661+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

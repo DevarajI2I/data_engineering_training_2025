@@ -1,0 +1,32 @@
+[2025-10-13T05:07:16.024+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-13T05:07:13.841260+00:00 [queued]>
+[2025-10-13T05:07:16.033+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-13T05:07:13.841260+00:00 [queued]>
+[2025-10-13T05:07:16.033+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-13T05:07:16.051+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-13 05:07:13.841260+00:00
+[2025-10-13T05:07:16.056+0000] {standard_task_runner.py:60} INFO - Started process 224 to run task
+[2025-10-13T05:07:16.060+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fact_sales_dag', 'load_fact_sales', 'manual__2025-10-13T05:07:13.841260+00:00', '--job-id', '139', '--raw', '--subdir', 'DAGS_FOLDER/fact_sales_dag.py', '--cfg-path', '/tmp/tmp375l6zu3']
+[2025-10-13T05:07:16.062+0000] {standard_task_runner.py:88} INFO - Job 139: Subtask load_fact_sales
+[2025-10-13T05:07:16.125+0000] {task_command.py:423} INFO - Running <TaskInstance: fact_sales_dag.load_fact_sales manual__2025-10-13T05:07:13.841260+00:00 [running]> on host cd1b8c665937
+[2025-10-13T05:07:16.270+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fact_sales_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-13T05:07:13.841260+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-13T05:07:13.841260+00:00'
+[2025-10-13T05:07:16.274+0000] {logging_mixin.py:188} INFO - 🚀 Starting fact_sales ETL pipeline
+[2025-10-13T05:07:16.311+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for fact_sales: 2025-10-13 04:59:51.515612
+[2025-10-13T05:07:16.312+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-13 04:59:51.515612
+[2025-10-13T05:07:23.561+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:37: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-13T05:07:23.564+0000] {logging_mixin.py:188} INFO - 🔍 Found 1 new sales records since last run.
+[2025-10-13T05:07:23.565+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/sales_etl.py", line 58, in run_sales_etl
+    new_data = new_data.merge(customer_dim[['customer_id','customer_key']], on='customer_id', how='left') \
+NameError: name 'customer_dim' is not defined
+[2025-10-13T05:07:23.580+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=fact_sales_dag, task_id=load_fact_sales, execution_date=20251013T050713, start_date=20251013T050716, end_date=20251013T050723
+[2025-10-13T05:07:23.585+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for fact_sales: failed at 2025-10-13 05:07:23.581379
+[2025-10-13T05:07:23.601+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 139 for task load_fact_sales (name 'customer_dim' is not defined; 224)
+[2025-10-13T05:07:23.649+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-13T05:07:23.671+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

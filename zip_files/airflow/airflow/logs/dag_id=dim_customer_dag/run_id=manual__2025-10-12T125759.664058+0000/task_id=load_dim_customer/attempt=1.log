@@ -1,0 +1,21 @@
+[2025-10-12T12:58:03.244+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-12T12:57:59.664058+00:00 [queued]>
+[2025-10-12T12:58:03.263+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-12T12:57:59.664058+00:00 [queued]>
+[2025-10-12T12:58:03.265+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-12T12:58:03.321+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_customer> on 2025-10-12 12:57:59.664058+00:00
+[2025-10-12T12:58:03.331+0000] {standard_task_runner.py:60} INFO - Started process 2540 to run task
+[2025-10-12T12:58:03.337+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'dim_customer_dag', 'load_dim_customer', 'manual__2025-10-12T12:57:59.664058+00:00', '--job-id', '119', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmp0avocagm']
+[2025-10-12T12:58:03.340+0000] {standard_task_runner.py:88} INFO - Job 119: Subtask load_dim_customer
+[2025-10-12T12:58:03.442+0000] {task_command.py:423} INFO - Running <TaskInstance: dim_customer_dag.load_dim_customer manual__2025-10-12T12:57:59.664058+00:00 [running]> on host ba936f2a330d
+[2025-10-12T12:58:03.682+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dim_customer_dag' AIRFLOW_CTX_TASK_ID='load_dim_customer' AIRFLOW_CTX_EXECUTION_DATE='2025-10-12T12:57:59.664058+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-12T12:57:59.664058+00:00'
+[2025-10-12T12:58:03.685+0000] {logging_mixin.py:188} INFO - 🚀 Starting dim_customer ETL pipeline
+[2025-10-12T12:58:03.768+0000] {logging_mixin.py:188} INFO - 🕓 Last SUCCESS run for dim_customer: 2025-10-12 10:00:05.600928
+[2025-10-12T12:58:03.769+0000] {logging_mixin.py:188} INFO - ✅ Last successful run found: 2025-10-12 10:00:05.600928
+[2025-10-12T12:58:16.918+0000] {logging_mixin.py:188} INFO - 🔍 Found 1 new/updated records since last run.
+[2025-10-12T12:58:16.952+0000] {logging_mixin.py:188} INFO - ✅ Successfully loaded 1 records into dim_customer
+[2025-10-12T12:58:16.963+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_customer: success at 2025-10-12 12:58:16.958998
+[2025-10-12T12:58:16.964+0000] {logging_mixin.py:188} INFO - 🟩 dim_customer ETL completed successfully.
+[2025-10-12T12:58:16.965+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-12T12:58:16.999+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=dim_customer_dag, task_id=load_dim_customer, execution_date=20251012T125759, start_date=20251012T125803, end_date=20251012T125816
+[2025-10-12T12:58:17.007+0000] {logging_mixin.py:188} INFO - 🟩 Logged ETL run for dim_customer: success at 2025-10-12 12:58:17.001024
+[2025-10-12T12:58:17.066+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-12T12:58:17.092+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

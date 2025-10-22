@@ -1,0 +1,22 @@
+[2025-10-09T05:26:18.213+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: run_sample_data_every_5min.run_sample_etl scheduled__2025-10-09T05:20:00+00:00 [queued]>
+[2025-10-09T05:26:18.237+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: run_sample_data_every_5min.run_sample_etl scheduled__2025-10-09T05:20:00+00:00 [queued]>
+[2025-10-09T05:26:18.238+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 2
+[2025-10-09T05:26:18.283+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_sample_etl> on 2025-10-09 05:20:00+00:00
+[2025-10-09T05:26:18.297+0000] {standard_task_runner.py:60} INFO - Started process 61 to run task
+[2025-10-09T05:26:18.312+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'run_sample_data_every_5min', 'run_sample_etl', 'scheduled__2025-10-09T05:20:00+00:00', '--job-id', '21', '--raw', '--subdir', 'DAGS_FOLDER/dag_file.py', '--cfg-path', '/tmp/tmpwc2z8ww4']
+[2025-10-09T05:26:18.326+0000] {standard_task_runner.py:88} INFO - Job 21: Subtask run_sample_etl
+[2025-10-09T05:26:18.492+0000] {task_command.py:423} INFO - Running <TaskInstance: run_sample_data_every_5min.run_sample_etl scheduled__2025-10-09T05:20:00+00:00 [running]> on host bb11283bac74
+[2025-10-09T05:26:18.649+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='run_sample_data_every_5min' AIRFLOW_CTX_TASK_ID='run_sample_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-10-09T05:20:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-09T05:20:00+00:00'
+[2025-10-09T05:26:18.758+0000] {logging_mixin.py:188} INFO - CSV loaded successfully!
+[2025-10-09T05:26:18.837+0000] {logging_mixin.py:188} INFO - 
+Customer Dimension:
+[2025-10-09T05:26:18.887+0000] {logging_mixin.py:188} INFO -                            customer_key  customer_id  ... preferred_channel language
+0  faaa0bd1-e2e9-4478-bc69-f7981d55d6e8        17850  ...               SMS  English
+1  45fd8d65-9858-4d71-9836-d8f3983cb6ad        13047  ...          WhatsApp   French
+
+[2 rows x 19 columns]
+[2025-10-09T05:26:19.140+0000] {logging_mixin.py:188} INFO - ✅ All tables loaded successfully!
+[2025-10-09T05:26:19.141+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-09T05:26:19.162+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=run_sample_data_every_5min, task_id=run_sample_etl, execution_date=20251009T052000, start_date=20251009T052618, end_date=20251009T052619
+[2025-10-09T05:26:19.209+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-09T05:26:19.247+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
