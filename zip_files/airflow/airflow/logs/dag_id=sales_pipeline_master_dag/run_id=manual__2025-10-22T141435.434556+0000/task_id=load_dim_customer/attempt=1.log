@@ -1,0 +1,47 @@
+[2025-10-22T14:14:39.041+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_customer manual__2025-10-22T14:14:35.434556+00:00 [queued]>
+[2025-10-22T14:14:39.056+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_customer manual__2025-10-22T14:14:35.434556+00:00 [queued]>
+[2025-10-22T14:14:39.057+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-22T14:14:39.083+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_customer> on 2025-10-22 14:14:35.434556+00:00
+[2025-10-22T14:14:39.093+0000] {standard_task_runner.py:60} INFO - Started process 4848 to run task
+[2025-10-22T14:14:39.101+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_dim_customer', 'manual__2025-10-22T14:14:35.434556+00:00', '--job-id', '328', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmpvse6lccv']
+[2025-10-22T14:14:39.103+0000] {standard_task_runner.py:88} INFO - Job 328: Subtask load_dim_customer
+[2025-10-22T14:14:39.205+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_dim_customer manual__2025-10-22T14:14:35.434556+00:00 [running]> on host 73b97317d540
+[2025-10-22T14:14:39.383+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_dim_customer' AIRFLOW_CTX_EXECUTION_DATE='2025-10-22T14:14:35.434556+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-22T14:14:35.434556+00:00'
+[2025-10-22T14:14:39.386+0000] {logging_mixin.py:188} INFO -  Starting dim_customer ETL pipeline
+[2025-10-22T14:14:39.496+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for dim_customer: 2025-10-22 13:57:02.065815
+[2025-10-22T14:14:39.497+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-22 13:57:02.065815
+[2025-10-22T14:14:50.348+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/customer_etl.py:44: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["in_date"] = pd.to_datetime(df["in_date"], errors="coerce")
+
+[2025-10-22T14:14:52.536+0000] {logging_mixin.py:188} INFO - Found 1 new/updated records since last run.
+[2025-10-22T14:14:52.565+0000] {logging_mixin.py:188} INFO - Table 'dim_customer' not found. Creating now...
+[2025-10-22T14:14:52.606+0000] {logging_mixin.py:188} INFO - ✅ Table 'dim_customer' created successfully.
+[2025-10-22T14:14:52.615+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/customer_etl.py", line 153, in run_customer_etl
+    upsert_dimension(
+  File "/opt/airflow/dags/etl_scripts/common_utils.py", line 76, in upsert_dimension
+    conn.execute(sql, rows_prepped)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1808, in _execute_context
+    conn = self._revalidate_connection()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 655, in _revalidate_connection
+    raise exc.ResourceClosedError("This Connection is closed")
+sqlalchemy.exc.ResourceClosedError: This Connection is closed
+[2025-10-22T14:14:52.649+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=sales_pipeline_master_dag, task_id=load_dim_customer, execution_date=20251022T141435, start_date=20251022T141439, end_date=20251022T141452
+[2025-10-22T14:14:52.656+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_customer: failed at 2025-10-22 14:14:52.651149
+[2025-10-22T14:14:52.657+0000] {logging_mixin.py:188} INFO - Task load_dim_customer in DAG sales_pipeline_master_dag failed!
+[2025-10-22T14:14:52.678+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 328 for task load_dim_customer (This Connection is closed; 4848)
+[2025-10-22T14:14:52.756+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-22T14:14:52.800+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

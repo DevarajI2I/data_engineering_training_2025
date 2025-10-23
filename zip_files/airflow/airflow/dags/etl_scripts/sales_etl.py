@@ -55,7 +55,7 @@ def run_sales_etl():
     product_dim = pd.read_sql("select * from dim_product", engine)
     date_dim = pd.read_sql("select * from dim_date", engine)
     date_dim.rename(columns={"date": "invoice_date"}, inplace=True)
-    
+    date_dim['invoice_date'] = pd.to_datetime(date_dim['invoice_date'], errors='coerce')
     new_data.rename(columns={
         "InvoiceNo": "invoice_no",
         "StockCode": "stock_code",
@@ -65,6 +65,7 @@ def run_sales_etl():
         "CustomerID": "customer_id",
         "Country": "country"
     }, inplace=True)
+    new_data['customer_id'] = new_data['customer_id'].fillna(0).astype(int)
 
     # -------------------------------------------------------------------------
     #  Merge with dimension keys
@@ -97,6 +98,24 @@ def run_sales_etl():
 
     # Add updated_at timestamp
     fact_sales['updated_at'] = datetime.now()
+
+    create_table_query = f"""
+    CREATE TABLE IF NOT EXISTS {table_name} (
+        sales_key UUID PRIMARY KEY,
+        invoice_no TEXT,
+        customer_key UUID,
+        product_key UUID,
+        date_key INT,
+        quantity INT,
+        unit_price NUMERIC,
+        total_price NUMERIC,
+        tax_amount NUMERIC,
+        returns_flag BOOLEAN,
+        return_reason TEXT,
+        shipping_method TEXT,
+        updated_at TIMESTAMP
+    );
+    """
 
     # -------------------------------------------------------------------------
     #  Load into PostgreSQL

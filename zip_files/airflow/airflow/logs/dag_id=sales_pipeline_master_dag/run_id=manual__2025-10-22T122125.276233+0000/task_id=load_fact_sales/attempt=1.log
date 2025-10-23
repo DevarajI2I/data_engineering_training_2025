@@ -1,0 +1,54 @@
+[2025-10-22T12:21:49.787+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_fact_sales manual__2025-10-22T12:21:25.276233+00:00 [queued]>
+[2025-10-22T12:21:49.807+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_fact_sales manual__2025-10-22T12:21:25.276233+00:00 [queued]>
+[2025-10-22T12:21:49.808+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-22T12:21:49.858+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_fact_sales> on 2025-10-22 12:21:25.276233+00:00
+[2025-10-22T12:21:49.869+0000] {standard_task_runner.py:60} INFO - Started process 4227 to run task
+[2025-10-22T12:21:49.880+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_fact_sales', 'manual__2025-10-22T12:21:25.276233+00:00', '--job-id', '307', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmp92waoc9g']
+[2025-10-22T12:21:49.883+0000] {standard_task_runner.py:88} INFO - Job 307: Subtask load_fact_sales
+[2025-10-22T12:21:49.999+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_fact_sales manual__2025-10-22T12:21:25.276233+00:00 [running]> on host 73b97317d540
+[2025-10-22T12:21:50.215+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_fact_sales' AIRFLOW_CTX_EXECUTION_DATE='2025-10-22T12:21:25.276233+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-22T12:21:25.276233+00:00'
+[2025-10-22T12:21:50.219+0000] {logging_mixin.py:188} INFO -  Starting fact_sales ETL pipeline
+[2025-10-22T12:21:50.274+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for fact_sales: 2025-10-22 05:14:30.085992
+[2025-10-22T12:21:50.306+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-22 05:14:30.085992
+[2025-10-22T12:22:01.399+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:37: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-22T12:22:01.404+0000] {logging_mixin.py:188} INFO -  Found 1 new sales records since last run.
+[2025-10-22T12:22:01.442+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:59: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data.rename(columns={
+
+[2025-10-22T12:22:01.445+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/sales_etl.py:68: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_data['customer_id'] = new_data['customer_id'].astype(int)
+
+[2025-10-22T12:22:01.457+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/sales_etl.py", line 75, in run_sales_etl
+    new_data = new_data.merge(customer_dim[['customer_id','customer_key']], on='customer_id', how='left') \
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 9843, in merge
+    return merge(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/reshape/merge.py", line 148, in merge
+    op = _MergeOperation(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/reshape/merge.py", line 741, in __init__
+    self._maybe_coerce_merge_keys()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/reshape/merge.py", line 1405, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on datetime64[ns] and object columns. If you wish to proceed you should use pd.concat
+[2025-10-22T12:22:01.483+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=sales_pipeline_master_dag, task_id=load_fact_sales, execution_date=20251022T122125, start_date=20251022T122149, end_date=20251022T122201
+[2025-10-22T12:22:01.511+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_customer: failed at 2025-10-22 12:22:01.485301
+[2025-10-22T12:22:01.513+0000] {logging_mixin.py:188} INFO - Task load_fact_sales in DAG sales_pipeline_master_dag failed!
+[2025-10-22T12:22:01.546+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 307 for task load_fact_sales (You are trying to merge on datetime64[ns] and object columns. If you wish to proceed you should use pd.concat; 4227)
+[2025-10-22T12:22:01.624+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-22T12:22:01.666+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

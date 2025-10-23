@@ -1,0 +1,7 @@
+[2025-10-23T03:17:52.468+0000] {processor.py:161} INFO - Started process (PID=54284) to work on /opt/airflow/dags/count_check_dag.py
+[2025-10-23T03:17:52.482+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/count_check_dag.py for tasks to queue
+[2025-10-23T03:17:52.512+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:52.511+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/count_check_dag.py
+[2025-10-23T03:17:54.362+0000] {processor.py:840} INFO - DAG(s) 'count_check_dag' retrieved from /opt/airflow/dags/count_check_dag.py
+[2025-10-23T03:17:54.420+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:54.419+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-10-23T03:17:54.494+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:54.494+0000] {dag.py:3823} INFO - Setting next_dagrun for count_check_dag to 2025-10-22 00:00:00+00:00, run_after=2025-10-23 00:00:00+00:00
+[2025-10-23T03:17:54.542+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/count_check_dag.py took 2.090 seconds

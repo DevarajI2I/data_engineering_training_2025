@@ -98,6 +98,33 @@ def run_product_etl():
         print(" No new product records to insert.")
         log_etl_run(table_name, status='success')
         return
+    
+    with engine.begin() as conn:
+        conn.execute(text(f"""
+            CREATE TABLE IF NOT EXISTS dim_product (
+                product_key UUID PRIMARY KEY,
+                stock_code VARCHAR(50) UNIQUE NOT NULL,
+                description TEXT,
+                category VARCHAR(100),
+                sub_category VARCHAR(100),
+                brand VARCHAR(100),
+                color VARCHAR(50),
+                size VARCHAR(20),
+                material_type VARCHAR(100),
+                country_of_origin VARCHAR(100),
+                supplier_name VARCHAR(150),
+                rating FLOAT,
+                product_weight FLOAT,
+                warranty_period VARCHAR(50),
+                package_type VARCHAR(50),
+                certification VARCHAR(50),
+                target_audience VARCHAR(50),
+                usage_type VARCHAR(50),
+                updated_at TIMESTAMP
+            )
+        """))
+    print("✅ Verified: dim_product table exists in database.")
+
 
     # -------------------------------------------------------------------------
     #  Prepare final dimension data

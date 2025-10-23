@@ -1,0 +1,25 @@
+[2025-10-22T12:25:21.274+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T12:25:16.632893+00:00 [queued]>
+[2025-10-22T12:25:21.286+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T12:25:16.632893+00:00 [queued]>
+[2025-10-22T12:25:21.288+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-22T12:25:21.320+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_date> on 2025-10-22 12:25:16.632893+00:00
+[2025-10-22T12:25:21.340+0000] {standard_task_runner.py:60} INFO - Started process 4282 to run task
+[2025-10-22T12:25:21.353+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_dim_date', 'manual__2025-10-22T12:25:16.632893+00:00', '--job-id', '310', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmp1oj1vlmi']
+[2025-10-22T12:25:21.356+0000] {standard_task_runner.py:88} INFO - Job 310: Subtask load_dim_date
+[2025-10-22T12:25:21.464+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T12:25:16.632893+00:00 [running]> on host 73b97317d540
+[2025-10-22T12:25:21.607+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_dim_date' AIRFLOW_CTX_EXECUTION_DATE='2025-10-22T12:25:16.632893+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-22T12:25:16.632893+00:00'
+[2025-10-22T12:25:21.610+0000] {logging_mixin.py:188} INFO -  Starting dim_date ETL pipeline
+[2025-10-22T12:25:21.643+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for dim_date: 2025-10-22 12:21:43.307328
+[2025-10-22T12:25:21.644+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-22 12:21:43.307328
+[2025-10-22T12:25:32.808+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:36: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-22T12:25:32.900+0000] {logging_mixin.py:188} INFO -  Found 1 new date records since last run.
+[2025-10-22T12:25:32.919+0000] {logging_mixin.py:188} INFO - Verified: dim_date table exists in database.
+[2025-10-22T12:25:32.942+0000] {logging_mixin.py:188} INFO - Upserted 1 rows into dim_date
+[2025-10-22T12:25:32.967+0000] {logging_mixin.py:188} INFO - ✅ Upsert completed: 1 records processed into dim_date.
+[2025-10-22T12:25:32.968+0000] {logging_mixin.py:188} INFO -  dim_date ETL completed successfully.
+[2025-10-22T12:25:32.969+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-10-22T12:25:32.991+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=sales_pipeline_master_dag, task_id=load_dim_date, execution_date=20251022T122516, start_date=20251022T122521, end_date=20251022T122532
+[2025-10-22T12:25:32.997+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_date: success at 2025-10-22 12:25:32.992867
+[2025-10-22T12:25:33.053+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-22T12:25:33.113+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

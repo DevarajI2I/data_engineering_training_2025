@@ -10,7 +10,7 @@ def load_csv():
     """Load main CSV file"""
     csv_path = "/opt/airflow/data/data.csv"
     df = pd.read_csv(csv_path, sep=',', encoding='latin1', on_bad_lines='skip', engine='python')
-    df = df.head(10)
+    df = df.head(1000)
     return df
 
 def _hyphen_uuid(u: str) -> str:
@@ -27,29 +27,19 @@ def upsert_dimension(
     delta_key_columns: List[str],
     update_columns: List[str],
 ) -> None:
-    """
-    Generic batch upsert using ON CONFLICT (...) DO UPDATE.
-    - conn: SQLAlchemy connection (inside engine.begin())
-    - table_name: target table name
-    - rows: list of dicts (column->value)
-    - pk_column: surrogate PK column name (e.g. customer_key)
-    - delta_key_columns: columns used for conflict detection (business key(s))
-    - update_columns: columns to update on conflict
-    """
     if not rows:
         print("No rows to upsert.")
         return
 
-    # prepare rows: hyphenate uuid if provided, and drop bad rows missing delta keys
+    # Prepare rows
     rows_prepped = []
     for r in rows:
         nr = dict(r)
-        # fix uuid format if needed
         pkval = nr.get(pk_column)
         if isinstance(pkval, str):
-            nr[pk_column] = _hyphen_uuid(pkval)
-        # skip rows missing any delta key
-        if not all(nr.get(k) not in (None, "") for k in delta_key_columns):
+            nr[pk_column] = _hyphen_uuid(pkval)  # your UUID fixer
+        # Skip rows missing any delta key (only matters if keys provided)
+        if delta_key_columns and not all(nr.get(k) not in (None, "") for k in delta_key_columns):
             continue
         rows_prepped.append(nr)
 
@@ -57,21 +47,26 @@ def upsert_dimension(
         print("No valid rows after filtering delta keys.")
         return
 
-    # Build SQL - use named params (sqlalchemy.text handles execution with list of dicts)
+    # Build SQL
     all_columns = [pk_column] + delta_key_columns + update_columns
     placeholders = ", ".join(f":{c}" for c in all_columns)
-    assignments = ", ".join(f"{c}=EXCLUDED.{c}" for c in update_columns)
-    conflict_cols = ", ".join(delta_key_columns)
 
-    sql = text(
-        f"""
-        INSERT INTO {table_name} ({', '.join(all_columns)})
-        VALUES ({placeholders})
-        ON CONFLICT ({conflict_cols}) DO UPDATE
-        SET {assignments}
-        """
-    )
+    if delta_key_columns:
+        assignments = ", ".join(f"{c}=EXCLUDED.{c}" for c in update_columns)
+        conflict_cols = ", ".join(delta_key_columns)
+        sql = text(f"""
+            INSERT INTO {table_name} ({', '.join(all_columns)})
+            VALUES ({placeholders})
+            ON CONFLICT ({conflict_cols}) DO UPDATE
+            SET {assignments}
+        """)
+    else:
+        # Plain insert if no conflict keys
+        sql = text(f"""
+            INSERT INTO {table_name} ({', '.join(all_columns)})
+            VALUES ({placeholders})
+        """)
 
-    # Execute as batch; SQLAlchemy will execute many rows in one go
+    # Execute batch
     conn.execute(sql, rows_prepped)
-    print(f"Upserted {len(rows_prepped)} rows into {table_name}")
+    print(f"Inserted/Upserted {len(rows_prepped)} rows into {table_name}")

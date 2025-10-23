@@ -1,0 +1,7 @@
+[2025-10-23T03:17:42.270+0000] {processor.py:161} INFO - Started process (PID=54272) to work on /opt/airflow/dags/dim_product_dag.py
+[2025-10-23T03:17:42.278+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/dim_product_dag.py for tasks to queue
+[2025-10-23T03:17:42.280+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:42.280+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/dim_product_dag.py
+[2025-10-23T03:17:45.376+0000] {processor.py:840} INFO - DAG(s) 'dim_product_dag' retrieved from /opt/airflow/dags/dim_product_dag.py
+[2025-10-23T03:17:45.490+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:45.480+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-10-23T03:17:45.556+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:45.555+0000] {dag.py:3823} INFO - Setting next_dagrun for dim_product_dag to None, run_after=None
+[2025-10-23T03:17:45.632+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/dim_product_dag.py took 3.369 seconds

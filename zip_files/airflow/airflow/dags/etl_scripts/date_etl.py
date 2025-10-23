@@ -56,6 +56,21 @@ def run_date_etl():
         log_etl_run(table_name, status="success")
         return
 
+    with engine.begin() as conn:
+        conn.execute(text("""
+        CREATE TABLE IF NOT EXISTS dim_date (
+            date_key BIGINT PRIMARY KEY,
+            date DATE UNIQUE NOT NULL,
+            year INT,
+            month INT,
+            day INT,
+            quarter INT,
+            updated_at TIMESTAMP
+        )
+    """))
+    print("Verified: dim_date table exists in database.")
+    # Drop invalid/missing dates
+    new_data = new_data.dropna(subset=["InDate"])
     # -------------------------------------------------------------------------
     #  Extract date components
     # -------------------------------------------------------------------------
@@ -67,7 +82,8 @@ def run_date_etl():
 
     #  Convert invoice_date first, then create date_key
     new_data["invoice_date"] = pd.to_datetime(new_data["invoice_date"], errors="coerce")
-    new_data["date_key"] = new_data["invoice_date"].dt.strftime("%Y%m%d").astype(int)
+    new_data = new_data.dropna(subset=["invoice_date"])  # remove invalid rows
+    new_data["date_key"] = new_data["invoice_date"].dt.strftime("%Y%m%d").astype("Int64")
 
     # -------------------------------------------------------------------------
     #  Prepare final dimension table

@@ -1,0 +1,5 @@
+[2025-10-23T03:17:49.127+0000] {processor.py:161} INFO - Started process (PID=54279) to work on /opt/airflow/dags/sampleDataScript.py
+[2025-10-23T03:17:49.141+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/sampleDataScript.py for tasks to queue
+[2025-10-23T03:17:49.190+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:49.189+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/sampleDataScript.py
+[2025-10-23T03:17:51.927+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/sampleDataScript.py
+[2025-10-23T03:17:52.010+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/sampleDataScript.py took 2.900 seconds

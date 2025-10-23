@@ -1,0 +1,5 @@
+[2025-10-23T03:17:52.170+0000] {processor.py:161} INFO - Started process (PID=54283) to work on /opt/airflow/dags/TableMismatchMailHelper.py
+[2025-10-23T03:17:52.173+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/TableMismatchMailHelper.py for tasks to queue
+[2025-10-23T03:17:52.176+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:52.175+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/TableMismatchMailHelper.py
+[2025-10-23T03:17:52.223+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/TableMismatchMailHelper.py
+[2025-10-23T03:17:52.291+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/TableMismatchMailHelper.py took 0.167 seconds

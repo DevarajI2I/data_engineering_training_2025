@@ -1,0 +1,85 @@
+[2025-10-22T11:48:21.839+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T11:48:16.823965+00:00 [queued]>
+[2025-10-22T11:48:21.857+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T11:48:16.823965+00:00 [queued]>
+[2025-10-22T11:48:21.858+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-22T11:48:21.897+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_date> on 2025-10-22 11:48:16.823965+00:00
+[2025-10-22T11:48:21.909+0000] {standard_task_runner.py:60} INFO - Started process 3692 to run task
+[2025-10-22T11:48:21.918+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_dim_date', 'manual__2025-10-22T11:48:16.823965+00:00', '--job-id', '285', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmp8sqxyvr6']
+[2025-10-22T11:48:21.922+0000] {standard_task_runner.py:88} INFO - Job 285: Subtask load_dim_date
+[2025-10-22T11:48:22.048+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_dim_date manual__2025-10-22T11:48:16.823965+00:00 [running]> on host 73b97317d540
+[2025-10-22T11:48:22.321+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_dim_date' AIRFLOW_CTX_EXECUTION_DATE='2025-10-22T11:48:16.823965+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-22T11:48:16.823965+00:00'
+[2025-10-22T11:48:22.325+0000] {logging_mixin.py:188} INFO -  Starting dim_date ETL pipeline
+[2025-10-22T11:48:22.371+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for dim_date: 2025-10-22 05:14:17.461167
+[2025-10-22T11:48:22.371+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-22 05:14:17.461167
+[2025-10-22T11:48:34.499+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/date_etl.py:36: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["InDate"] = pd.to_datetime(df["InDate"], errors="coerce")
+
+[2025-10-22T11:48:34.575+0000] {logging_mixin.py:188} INFO -  Found 1 new date records since last run.
+[2025-10-22T11:48:34.616+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "dim_date" does not exist
+LINE 2:         INSERT INTO dim_date (date_key, date, year, month, d...
+                            ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/date_etl.py", line 88, in run_date_etl
+    upsert_dimension(
+  File "/opt/airflow/dags/etl_scripts/common_utils.py", line 76, in upsert_dimension
+    conn.execute(sql, rows_prepped)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "dim_date" does not exist
+LINE 2:         INSERT INTO dim_date (date_key, date, year, month, d...
+                            ^
+
+[SQL: 
+        INSERT INTO dim_date (date_key, date, year, month, day, quarter, updated_at)
+        VALUES (%(date_key)s, %(date)s, %(year)s, %(month)s, %(day)s, %(quarter)s, %(updated_at)s)
+        ON CONFLICT (date) DO UPDATE
+        SET year=EXCLUDED.year, month=EXCLUDED.month, day=EXCLUDED.day, quarter=EXCLUDED.quarter, updated_at=EXCLUDED.updated_at
+        ]
+[parameters: {'date_key': 20101201, 'date': Timestamp('2010-12-01 08:26:00'), 'year': 2025, 'month': 12, 'day': 18, 'quarter': 4, 'updated_at': Timestamp('2025-10-22 11:48:34.580270')}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-10-22T11:48:34.658+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=sales_pipeline_master_dag, task_id=load_dim_date, execution_date=20251022T114816, start_date=20251022T114821, end_date=20251022T114834
+[2025-10-22T11:48:34.665+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_customer: failed at 2025-10-22 11:48:34.660372
+[2025-10-22T11:48:34.666+0000] {logging_mixin.py:188} INFO - Task load_dim_date in DAG sales_pipeline_master_dag failed!
+[2025-10-22T11:48:34.695+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 285 for task load_dim_date ((psycopg2.errors.UndefinedTable) relation "dim_date" does not exist
+LINE 2:         INSERT INTO dim_date (date_key, date, year, month, d...
+                            ^
+
+[SQL: 
+        INSERT INTO dim_date (date_key, date, year, month, day, quarter, updated_at)
+        VALUES (%(date_key)s, %(date)s, %(year)s, %(month)s, %(day)s, %(quarter)s, %(updated_at)s)
+        ON CONFLICT (date) DO UPDATE
+        SET year=EXCLUDED.year, month=EXCLUDED.month, day=EXCLUDED.day, quarter=EXCLUDED.quarter, updated_at=EXCLUDED.updated_at
+        ]
+[parameters: {'date_key': 20101201, 'date': Timestamp('2010-12-01 08:26:00'), 'year': 2025, 'month': 12, 'day': 18, 'quarter': 4, 'updated_at': Timestamp('2025-10-22 11:48:34.580270')}]
+(Background on this error at: https://sqlalche.me/e/14/f405); 3692)
+[2025-10-22T11:48:34.728+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-22T11:48:34.777+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

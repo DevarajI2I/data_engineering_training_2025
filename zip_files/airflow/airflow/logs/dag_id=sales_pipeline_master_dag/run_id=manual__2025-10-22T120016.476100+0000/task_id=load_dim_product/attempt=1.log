@@ -1,0 +1,85 @@
+[2025-10-22T12:00:21.751+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_product manual__2025-10-22T12:00:16.476100+00:00 [queued]>
+[2025-10-22T12:00:21.770+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_pipeline_master_dag.load_dim_product manual__2025-10-22T12:00:16.476100+00:00 [queued]>
+[2025-10-22T12:00:21.771+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-10-22T12:00:21.800+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_dim_product> on 2025-10-22 12:00:16.476100+00:00
+[2025-10-22T12:00:21.809+0000] {standard_task_runner.py:60} INFO - Started process 3872 to run task
+[2025-10-22T12:00:21.816+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'sales_pipeline_master_dag', 'load_dim_product', 'manual__2025-10-22T12:00:16.476100+00:00', '--job-id', '288', '--raw', '--subdir', 'DAGS_FOLDER/dim_customer_dag.py', '--cfg-path', '/tmp/tmphxvt7qeb']
+[2025-10-22T12:00:21.818+0000] {standard_task_runner.py:88} INFO - Job 288: Subtask load_dim_product
+[2025-10-22T12:00:21.931+0000] {task_command.py:423} INFO - Running <TaskInstance: sales_pipeline_master_dag.load_dim_product manual__2025-10-22T12:00:16.476100+00:00 [running]> on host 73b97317d540
+[2025-10-22T12:00:22.132+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='sales_pipeline_master_dag' AIRFLOW_CTX_TASK_ID='load_dim_product' AIRFLOW_CTX_EXECUTION_DATE='2025-10-22T12:00:16.476100+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-22T12:00:16.476100+00:00'
+[2025-10-22T12:00:22.135+0000] {logging_mixin.py:188} INFO - 🚀 Starting dim_product ETL pipeline
+[2025-10-22T12:00:22.239+0000] {logging_mixin.py:188} INFO -  Last SUCCESS run for dim_product: 2025-10-22 05:14:17.660685
+[2025-10-22T12:00:22.240+0000] {logging_mixin.py:188} INFO -  Last successful run found: 2025-10-22 05:14:17.660685
+[2025-10-22T12:00:35.853+0000] {warnings.py:109} WARNING - /opt/***/dags/etl_scripts/product_etl.py:46: UserWarning: Parsing dates in %d/%m/%Y %I:%M:%S %p format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  df["in_date"] = pd.to_datetime(df["in_date"], errors="coerce")
+
+[2025-10-22T12:00:36.759+0000] {logging_mixin.py:188} INFO - 🔍 Found 1 new/updated product records since last run.
+[2025-10-22T12:00:36.787+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "dim_product" does not exist
+LINE 2:         INSERT INTO dim_product (product_key, stock_code, de...
+                            ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/product_etl.py", line 127, in run_product_etl
+    upsert_dimension(
+  File "/opt/airflow/dags/etl_scripts/common_utils.py", line 76, in upsert_dimension
+    conn.execute(sql, rows_prepped)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "dim_product" does not exist
+LINE 2:         INSERT INTO dim_product (product_key, stock_code, de...
+                            ^
+
+[SQL: 
+        INSERT INTO dim_product (product_key, stock_code, description, category, sub_category, brand, color, size, material_type, country_of_origin, supplier_name, rating, product_weight, warranty_period, package_type, certification, target_audience, usage_type, updated_at)
+        VALUES (%(product_key)s, %(stock_code)s, %(description)s, %(category)s, %(sub_category)s, %(brand)s, %(color)s, %(size)s, %(material_type)s, %(country_of_origin)s, %(supplier_name)s, %(rating)s, %(product_weight)s, %(warranty_period)s, %(package_type)s, %(certification)s, %(target_audience)s, %(usage_type)s, %(updated_at)s)
+        ON CONFLICT (stock_code) DO UPDATE
+        SET description=EXCLUDED.description, category=EXCLUDED.category, sub_category=EXCLUDED.sub_category, brand=EXCLUDED.brand, color=EXCLUDED.color, size=EXCLUDED.size, material_type=EXCLUDED.material_type, country_of_origin=EXCLUDED.country_of_origin, supplier_name=EXCLUDED.supplier_name, rating=EXCLUDED.rating, product_weight=EXCLUDED.product_weight, warranty_period=EXCLUDED.warranty_period, package_type=EXCLUDED.package_type, certification=EXCLUDED.certification, target_audience=EXCLUDED.target_audience, usage_type=EXCLUDED.usage_type, updated_at=EXCLUDED.updated_at
+        ]
+[parameters: {'product_key': 'b83e3121-0478-49fa-a2e8-8163436c879c', 'stock_code': '85123A', 'description': 'WHITE HANGING HEART T-LIGHT HOLDER', 'category': 'Furniture', 'sub_category': 'interview', 'brand': 'Thomas, Anthony and Hill', 'color': 'ForestGreen', 'size': 'Medium', 'material_type': 'Metal', 'country_of_origin': 'Bhutan', 'supplier_name': 'Padilla Inc', 'rating': 4.5, 'product_weight': 4.42, 'warranty_period': '2 years', 'package_type': 'Box', 'certification': 'FDA', 'target_audience': 'Professionals', 'usage_type': 'Commercial', 'updated_at': Timestamp('2025-10-22 12:00:36.756918')}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-10-22T12:00:36.822+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=sales_pipeline_master_dag, task_id=load_dim_product, execution_date=20251022T120016, start_date=20251022T120021, end_date=20251022T120036
+[2025-10-22T12:00:36.826+0000] {logging_mixin.py:188} INFO -  Logged ETL run for dim_customer: failed at 2025-10-22 12:00:36.823097
+[2025-10-22T12:00:36.827+0000] {logging_mixin.py:188} INFO - Task load_dim_product in DAG sales_pipeline_master_dag failed!
+[2025-10-22T12:00:36.845+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 288 for task load_dim_product ((psycopg2.errors.UndefinedTable) relation "dim_product" does not exist
+LINE 2:         INSERT INTO dim_product (product_key, stock_code, de...
+                            ^
+
+[SQL: 
+        INSERT INTO dim_product (product_key, stock_code, description, category, sub_category, brand, color, size, material_type, country_of_origin, supplier_name, rating, product_weight, warranty_period, package_type, certification, target_audience, usage_type, updated_at)
+        VALUES (%(product_key)s, %(stock_code)s, %(description)s, %(category)s, %(sub_category)s, %(brand)s, %(color)s, %(size)s, %(material_type)s, %(country_of_origin)s, %(supplier_name)s, %(rating)s, %(product_weight)s, %(warranty_period)s, %(package_type)s, %(certification)s, %(target_audience)s, %(usage_type)s, %(updated_at)s)
+        ON CONFLICT (stock_code) DO UPDATE
+        SET description=EXCLUDED.description, category=EXCLUDED.category, sub_category=EXCLUDED.sub_category, brand=EXCLUDED.brand, color=EXCLUDED.color, size=EXCLUDED.size, material_type=EXCLUDED.material_type, country_of_origin=EXCLUDED.country_of_origin, supplier_name=EXCLUDED.supplier_name, rating=EXCLUDED.rating, product_weight=EXCLUDED.product_weight, warranty_period=EXCLUDED.warranty_period, package_type=EXCLUDED.package_type, certification=EXCLUDED.certification, target_audience=EXCLUDED.target_audience, usage_type=EXCLUDED.usage_type, updated_at=EXCLUDED.updated_at
+        ]
+[parameters: {'product_key': 'b83e3121-0478-49fa-a2e8-8163436c879c', 'stock_code': '85123A', 'description': 'WHITE HANGING HEART T-LIGHT HOLDER', 'category': 'Furniture', 'sub_category': 'interview', 'brand': 'Thomas, Anthony and Hill', 'color': 'ForestGreen', 'size': 'Medium', 'material_type': 'Metal', 'country_of_origin': 'Bhutan', 'supplier_name': 'Padilla Inc', 'rating': 4.5, 'product_weight': 4.42, 'warranty_period': '2 years', 'package_type': 'Box', 'certification': 'FDA', 'target_audience': 'Professionals', 'usage_type': 'Commercial', 'updated_at': Timestamp('2025-10-22 12:00:36.756918')}]
+(Background on this error at: https://sqlalche.me/e/14/f405); 3872)
+[2025-10-22T12:00:36.875+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-22T12:00:36.903+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

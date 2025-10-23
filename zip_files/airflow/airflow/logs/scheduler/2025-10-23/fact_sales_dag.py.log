@@ -1,0 +1,7 @@
+[2025-10-23T03:17:45.516+0000] {processor.py:161} INFO - Started process (PID=54275) to work on /opt/airflow/dags/fact_sales_dag.py
+[2025-10-23T03:17:45.533+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/fact_sales_dag.py for tasks to queue
+[2025-10-23T03:17:45.535+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:45.535+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/fact_sales_dag.py
+[2025-10-23T03:17:47.387+0000] {processor.py:840} INFO - DAG(s) 'fact_sales_dag' retrieved from /opt/airflow/dags/fact_sales_dag.py
+[2025-10-23T03:17:47.580+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:47.579+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-10-23T03:17:47.668+0000] {logging_mixin.py:188} INFO - [2025-10-23T03:17:47.667+0000] {dag.py:3823} INFO - Setting next_dagrun for fact_sales_dag to None, run_after=None
+[2025-10-23T03:17:47.833+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/fact_sales_dag.py took 2.325 seconds

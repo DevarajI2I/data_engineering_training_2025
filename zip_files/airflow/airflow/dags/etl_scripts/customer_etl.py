@@ -88,7 +88,7 @@ def run_customer_etl():
     df["language"] = languages
     df["email"] = emails
     df["updated_at"] = datetime.now()  # Set timestamp here
-
+    df["customer_id"] = df["customer_id"].astype("Int64")
     # -------------------------------------------------------------------------
     #  Filter only new/updated data since last run
     # -------------------------------------------------------------------------
@@ -119,31 +119,71 @@ def run_customer_etl():
     # Reorder columns
     customer_dim = customer_dim[["customer_key"] + [col for col in customer_dim.columns if col != "customer_key"]]
 
+    inspector = inspect(engine)
+    if table_name not in inspector.get_table_names():
+        print(f"Table '{table_name}' not found. Creating now...")
+        create_table_sql = text(f"""
+            CREATE TABLE {table_name} (
+                customer_key UUID PRIMARY KEY,
+                customer_id INT UNIQUE,
+                country VARCHAR(100),
+                first_name VARCHAR(100),
+                last_name VARCHAR(100),
+                title VARCHAR(10),
+                gender VARCHAR(10),
+                dob DATE,
+                age INT,
+                marital_status VARCHAR(50),
+                phone_no VARCHAR(50),
+                email VARCHAR(255),
+                address TEXT,
+                city VARCHAR(100),
+                pincode VARCHAR(20),
+                region VARCHAR(100),
+                customer_type VARCHAR(50),
+                preferred_channel VARCHAR(50),
+                language VARCHAR(50),
+                updated_at TIMESTAMP
+            );
+        """)
+        with engine.begin() as conn:
+            conn.execute(create_table_sql)
+        print(f"✅ Table '{table_name}' created successfully.")
+
+        # Refresh inspector to see the new table
+        inspector = inspect(engine)
+
     # -------------------------------------------------------------------------
-    #  Load into PostgreSQL dim_customer table
+    #  Insert or upsert data
     # -------------------------------------------------------------------------
-    # -------------------------------------------------------------------------
-    #  Load into PostgreSQL dim_customer table (using UPSERT)
-    # -------------------------------------------------------------------------
+    rows = customer_dim.to_dict(orient="records")
     with engine.begin() as conn:
-        # Convert dataframe to list of dicts for batch insert
-        rows = customer_dim.to_dict(orient="records")
-
-        upsert_dimension(
-            conn=conn,
-            table_name="dim_customer",
-            rows=rows,
-            pk_column="customer_key",                 # your UUID surrogate key
-            delta_key_columns=["customer_id"],        # business key used to check duplicates
-            update_columns=[
-                "country", "first_name", "last_name", "title", "gender",
-                "dob", "age", "marital_status", "phone_no", "email", "address",
-                "city", "pincode", "region", "customer_type",
-                "preferred_channel", "language", "updated_at"
-            ]
-        )
-
-    print(f"Upsert completed: {len(customer_dim)} records processed into dim_customer.")
+        if last_success is None:  # first load
+            all_cols = list(rows[0].keys())
+            upsert_dimension(
+                conn=conn,
+                table_name=table_name,
+                rows=rows,
+                pk_column="customer_key",
+                delta_key_columns=[],  # no conflict keys for first load
+                update_columns=[c for c in all_cols if c != "customer_key"]
+            )
+            print(f"Inserted {len(rows)} rows into newly created table.")
+        else:  # table exists, do incremental upsert
+            upsert_dimension(
+                conn=conn,
+                table_name=table_name,
+                rows=rows,
+                pk_column="customer_key",
+                delta_key_columns=["customer_id"],  # conflict key
+                update_columns=[
+                    "country", "first_name", "last_name", "title", "gender",
+                    "dob", "age", "marital_status", "phone_no", "email", "address",
+                    "city", "pincode", "region", "customer_type",
+                    "preferred_channel", "language", "updated_at"
+                ]
+            )
+            print(f"Upsert completed: {len(rows)} records processed into {table_name}.")
 
     # -------------------------------------------------------------------------
     #  Log ETL status
